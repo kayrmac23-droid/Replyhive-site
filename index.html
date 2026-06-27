@@ -1084,22 +1084,11 @@
 </footer>
 
 <script>
-const SYSTEM_PROMPT = `You are a helpful AI assistant for "Forget Me Not Eatery", a warm and welcoming cafe located in Greenvale, Melbourne. You are demonstrating what a Fieldr AI assistant looks like for potential business clients.
-
-About the cafe:
-- Located at Direct Plants nursery, Mickleham Road Greenvale
-- Open 7 days: Mon-Fri 8:30am-3:30pm, Sat 8:30am-4pm, Sun 8:30am-4pm
-- Also open for dinner Wed-Fri 5pm-9:30pm
-- All-day breakfast and lunch menu
-- Wood-fired pizza (new!)
-- Wellness beverages, coffee, tea, cold pressed juices
-- Family friendly with children's retreat
-- Group bookings available
-- Private functions available
-- Catering available
-- Same-day bookings: call 03 9333 2575
-
-Be warm, helpful, concise and conversational. Keep responses to 2-3 sentences max. If asked about booking, prompt them to call or provide their details. If you don't know something, say you'll pass the message on to the team.`;
+// ── Formspree lead capture ────────────────────────────────────────────────
+// 1. Create a free form at https://formspree.io (it emails you each submission).
+// 2. Copy the form's ID (the part after /f/ in its endpoint).
+// 3. Paste it below. Until then, the form falls back to a mailto link.
+const FORMSPREE_FORM_ID = 'REPLACE_WITH_FORM_ID';
 
 let conversationHistory = [];
 let isTyping = false;
@@ -1144,19 +1133,14 @@ async function sendMessage() {
   showTyping();
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: SYSTEM_PROMPT,
-        messages: conversationHistory
-      })
+      body: JSON.stringify({ messages: conversationHistory })
     });
 
     const data = await response.json();
-    const reply = data.content?.[0]?.text || "Sorry, I didn't catch that — could you try again?";
+    const reply = data.reply || "Sorry, I didn't catch that — could you try again?";
     conversationHistory.push({ role: 'assistant', content: reply });
     removeTyping();
     addMessage(reply, false);
@@ -1174,14 +1158,36 @@ document.getElementById('chatInput').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') sendMessage();
 });
 
-function submitEmail() {
-  const email = document.getElementById('ctaEmail').value.trim();
+async function submitEmail() {
+  const input = document.getElementById('ctaEmail');
+  const email = input.value.trim();
   if (!email || !email.includes('@')) {
     alert('Please enter a valid email address.');
     return;
   }
-  alert(`Thanks! We'll be in touch at ${email} within 24 hours to set up your free demo.`);
-  document.getElementById('ctaEmail').value = '';
+
+  // Fallback if Formspree isn't configured yet: open the user's email client.
+  if (!FORMSPREE_FORM_ID || FORMSPREE_FORM_ID === 'REPLACE_WITH_FORM_ID') {
+    window.location.href =
+      `mailto:hello@fieldr.au?subject=Free demo request&body=${encodeURIComponent('I\'d like a free demo. My email: ' + email)}`;
+    return;
+  }
+
+  try {
+    const res = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ email, source: 'fieldr.au demo CTA' })
+    });
+    if (res.ok) {
+      alert(`Thanks! We'll be in touch at ${email} within 24 hours to set up your free demo.`);
+      input.value = '';
+    } else {
+      alert('Something went wrong — please email us directly at hello@fieldr.au.');
+    }
+  } catch (e) {
+    alert('Something went wrong — please email us directly at hello@fieldr.au.');
+  }
 }
 </script>
 
