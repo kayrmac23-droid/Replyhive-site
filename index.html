@@ -1173,13 +1173,27 @@ async function sendMessage() {
       body: JSON.stringify({ messages: conversationHistory })
     });
 
-    const data = await response.json();
-    const reply = data.reply || "Sorry, I didn't catch that — could you try again?";
-    conversationHistory.push({ role: 'assistant', content: reply });
     removeTyping();
-    addMessage(reply, false);
+
+    if (response.ok) {
+      const data = await response.json();
+      const reply = data.reply || "Sorry, I didn't catch that — could you try again?";
+      conversationHistory.push({ role: 'assistant', content: reply });
+      addMessage(reply, false);
+    } else {
+      // Roll back the failed user turn, otherwise the next send would put two
+      // user messages in a row and the API would reject it.
+      conversationHistory.pop();
+      let msg = "Sorry, the assistant is having trouble right now. Please try again in a moment.";
+      if (response.status === 429) {
+        const data = await response.json().catch(() => ({}));
+        msg = data.error || "You're sending messages quite fast — please wait a moment and try again.";
+      }
+      addMessage(msg, false);
+    }
   } catch (e) {
     removeTyping();
+    conversationHistory.pop();
     addMessage("Sorry, something went wrong on my end. Please try again!", false);
   }
 
