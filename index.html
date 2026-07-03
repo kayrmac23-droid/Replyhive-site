@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fieldr — AI Assistants for Small Business</title>
+<title>Replyhive — AI Assistants for Small Business</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -725,7 +725,7 @@
   }
 
   .cta-section::before {
-    content: 'FIELDR';
+    content: 'REPLYHIVE';
     position: absolute;
     top: 50%;
     left: 50%;
@@ -813,6 +813,39 @@
     text-underline-offset: 3px;
   }
 
+  /* Multi-field lead form — reuses .cta-input / .cta-submit styling */
+  .cta-form {
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .cta-form .cta-submit { width: 100%; }
+
+  .cta-input.invalid {
+    border-color: rgba(28,24,20,0.55);
+    background: rgba(255,255,255,0.28);
+  }
+
+  .cta-status {
+    margin-top: 16px;
+    min-height: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .cta-status.success { color: #fff; font-weight: 500; }
+  .cta-status.error { color: #2a1206; font-weight: 500; }
+
   /* ---- FOOTER ---- */
   footer {
     background: var(--ink);
@@ -882,6 +915,7 @@
     .demo-section { padding: 64px 20px; }
     .cta-section { padding: 64px 20px; }
     .cta-email-row { flex-direction: column; }
+    .cta-fields { grid-template-columns: 1fr; }
     footer { flex-direction: column; gap: 16px; text-align: center; }
   }
 </style>
@@ -890,7 +924,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">field<span>r</span></a>
+  <a href="#" class="nav-logo">replyhiv<span>e</span></a>
   <a href="#contact" class="nav-cta">Get a free demo →</a>
 </nav>
 
@@ -898,12 +932,12 @@
 <section class="hero">
   <div class="hero-eyebrow">AI Assistants for Small Business</div>
   <h1>Your business,<br><em>always answering.</em></h1>
-  <p class="hero-sub">Fieldr builds AI chat assistants that handle enquiries, answer questions and capture leads — 24 hours a day, without extra staff.</p>
+  <p class="hero-sub">Replyhive builds AI chat assistants that handle enquiries, answer questions and capture leads — 24 hours a day, without extra staff.</p>
   <div class="hero-actions">
     <a href="#demo" class="btn-primary">See a live demo</a>
     <a href="#contact" class="btn-secondary">Book a free call ↗</a>
   </div>
-  <div class="hero-bg-text">FIELDR</div>
+  <div class="hero-bg-text">REPLYHIVE</div>
 </section>
 
 <!-- STATS BAR -->
@@ -1023,7 +1057,7 @@
           <button class="chatbot-send" id="sendBtn" onclick="sendMessage()">Send</button>
         </div>
       </div>
-      <div class="demo-note">✦ Powered by Fieldr — this is what your customers would see</div>
+      <div class="demo-note">✦ Powered by Replyhive — this is what your customers would see</div>
     </div>
   </div>
 </section>
@@ -1068,28 +1102,28 @@
 <!-- CTA -->
 <section class="cta-section" id="contact">
   <h2>Ready to never miss an enquiry?</h2>
-  <p>Drop your email and we'll reach out to set up a free demo tailored to your business. No commitment, no tech knowledge needed.</p>
-  <div class="cta-email-row">
-    <input class="cta-input" type="email" id="ctaEmail" placeholder="your@email.com" />
-    <button class="cta-submit" onclick="submitEmail()">Get my free demo</button>
-  </div>
-  <p class="cta-or">Or email us directly at <a href="mailto:hello@fieldr.au">hello@fieldr.au</a></p>
+  <p>Tell us a bit about your business and we'll reach out to set up a free demo tailored to you. No commitment, no tech knowledge needed.</p>
+  <form class="cta-form" id="leadForm" novalidate>
+    <div class="cta-fields">
+      <input class="cta-input" type="text" id="leadName" name="name" placeholder="Your name" autocomplete="name" required />
+      <input class="cta-input" type="text" id="leadBusiness" name="business" placeholder="Business name" autocomplete="organization" required />
+      <input class="cta-input" type="email" id="leadEmail" name="email" placeholder="your@email.com" autocomplete="email" required />
+      <input class="cta-input" type="tel" id="leadPhone" name="phone" placeholder="Phone number" autocomplete="tel" required />
+    </div>
+    <button class="cta-submit" type="submit" id="leadSubmit">Get my free demo</button>
+    <p class="cta-status" id="leadStatus" role="status" aria-live="polite"></p>
+  </form>
+  <p class="cta-or">Or email us directly at <a href="mailto:hello@replyhive.com.au">hello@replyhive.com.au</a></p>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">field<span>r</span></div>
-  <p>© 2026 Fieldr. Built in Melbourne, Australia.</p>
-  <a href="mailto:hello@fieldr.au">hello@fieldr.au</a>
+  <div class="footer-logo">replyhiv<span>e</span></div>
+  <p>© 2026 Replyhive. Built in Melbourne, Australia.</p>
+  <a href="mailto:hello@replyhive.com.au">hello@replyhive.com.au</a>
 </footer>
 
 <script>
-// ── Formspree lead capture ────────────────────────────────────────────────
-// 1. Create a free form at https://formspree.io (it emails you each submission).
-// 2. Copy the form's ID (the part after /f/ in its endpoint).
-// 3. Paste it below. Until then, the form falls back to a mailto link.
-const FORMSPREE_FORM_ID = 'REPLACE_WITH_FORM_ID';
-
 let conversationHistory = [];
 let isTyping = false;
 
@@ -1139,13 +1173,27 @@ async function sendMessage() {
       body: JSON.stringify({ messages: conversationHistory })
     });
 
-    const data = await response.json();
-    const reply = data.reply || "Sorry, I didn't catch that — could you try again?";
-    conversationHistory.push({ role: 'assistant', content: reply });
     removeTyping();
-    addMessage(reply, false);
+
+    if (response.ok) {
+      const data = await response.json();
+      const reply = data.reply || "Sorry, I didn't catch that — could you try again?";
+      conversationHistory.push({ role: 'assistant', content: reply });
+      addMessage(reply, false);
+    } else {
+      // Roll back the failed user turn, otherwise the next send would put two
+      // user messages in a row and the API would reject it.
+      conversationHistory.pop();
+      let msg = "Sorry, the assistant is having trouble right now. Please try again in a moment.";
+      if (response.status === 429) {
+        const data = await response.json().catch(() => ({}));
+        msg = data.error || "You're sending messages quite fast — please wait a moment and try again.";
+      }
+      addMessage(msg, false);
+    }
   } catch (e) {
     removeTyping();
+    conversationHistory.pop();
     addMessage("Sorry, something went wrong on my end. Please try again!", false);
   }
 
@@ -1158,37 +1206,85 @@ document.getElementById('chatInput').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') sendMessage();
 });
 
-async function submitEmail() {
-  const input = document.getElementById('ctaEmail');
-  const email = input.value.trim();
-  if (!email || !email.includes('@')) {
-    alert('Please enter a valid email address.');
+// ── Lead capture ──────────────────────────────────────────────────────────
+// Posts to the /api/lead serverless function, which emails the lead via Resend.
+// No secrets on the client; success/error is shown inline (no alert()).
+const leadForm = document.getElementById('leadForm');
+const leadStatus = document.getElementById('leadStatus');
+const leadFields = {
+  name: document.getElementById('leadName'),
+  business: document.getElementById('leadBusiness'),
+  email: document.getElementById('leadEmail'),
+  phone: document.getElementById('leadPhone'),
+};
+
+function setLeadStatus(message, type) {
+  leadStatus.textContent = message;
+  leadStatus.className = 'cta-status' + (type ? ' ' + type : '');
+}
+
+// Clear the invalid highlight as the visitor corrects a field.
+Object.values(leadFields).forEach((el) => {
+  el.addEventListener('input', () => el.classList.remove('invalid'));
+});
+
+function validateLead(values) {
+  const invalid = [];
+  if (!values.name) invalid.push('name');
+  if (!values.business) invalid.push('business');
+  if (!values.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) invalid.push('email');
+  if (!values.phone) invalid.push('phone');
+  return invalid;
+}
+
+leadForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submit = document.getElementById('leadSubmit');
+
+  const values = {
+    name: leadFields.name.value.trim(),
+    business: leadFields.business.value.trim(),
+    email: leadFields.email.value.trim(),
+    phone: leadFields.phone.value.trim(),
+  };
+
+  Object.values(leadFields).forEach((el) => el.classList.remove('invalid'));
+  const invalid = validateLead(values);
+  if (invalid.length) {
+    invalid.forEach((k) => leadFields[k].classList.add('invalid'));
+    setLeadStatus('Please fill in your name, business, a valid email, and phone number.', 'error');
+    leadFields[invalid[0]].focus();
     return;
   }
 
-  // Fallback if Formspree isn't configured yet: open the user's email client.
-  if (!FORMSPREE_FORM_ID || FORMSPREE_FORM_ID === 'REPLACE_WITH_FORM_ID') {
-    window.location.href =
-      `mailto:hello@fieldr.au?subject=Free demo request&body=${encodeURIComponent('I\'d like a free demo. My email: ' + email)}`;
-    return;
-  }
+  submit.disabled = true;
+  const originalLabel = submit.textContent;
+  submit.textContent = 'Sending…';
+  setLeadStatus('Sending your request…', '');
 
   try {
-    const res = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
+    const res = await fetch('/api/lead', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ email, source: 'fieldr.au demo CTA' })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(values),
     });
+
     if (res.ok) {
-      alert(`Thanks! We'll be in touch at ${email} within 24 hours to set up your free demo.`);
-      input.value = '';
+      leadForm.reset();
+      setLeadStatus(`Thanks ${values.name}! We'll be in touch at ${values.email} within 24 hours to set up your free demo.`, 'success');
+    } else if (res.status === 429) {
+      setLeadStatus('You\'ve sent a few requests already — please try again in a few minutes.', 'error');
     } else {
-      alert('Something went wrong — please email us directly at hello@fieldr.au.');
+      const data = await res.json().catch(() => ({}));
+      setLeadStatus(data.error || 'Something went wrong — please email us directly at hello@replyhive.com.au.', 'error');
     }
-  } catch (e) {
-    alert('Something went wrong — please email us directly at hello@fieldr.au.');
+  } catch (err) {
+    setLeadStatus('Couldn\'t reach us — please check your connection or email hello@replyhive.com.au.', 'error');
+  } finally {
+    submit.disabled = false;
+    submit.textContent = originalLabel;
   }
-}
+});
 </script>
 
 </body>

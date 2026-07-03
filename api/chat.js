@@ -2,7 +2,9 @@
 // Keeps the Anthropic API key on the server so it is never exposed in the browser.
 // Set ANTHROPIC_API_KEY in your Vercel project's Environment Variables.
 
-const SYSTEM_PROMPT = `You are a helpful AI assistant for "Forget Me Not Eatery", a warm and welcoming cafe located in Greenvale, Melbourne. You are demonstrating what a Fieldr AI assistant looks like for potential business clients.
+import { getClientIp, rateLimit } from './_rateLimit.js';
+
+const SYSTEM_PROMPT = `You are a helpful AI assistant for "Forget Me Not Eatery", a warm and welcoming cafe located in Greenvale, Melbourne. You are demonstrating what a Replyhive AI assistant looks like for potential business clients.
 
 About the cafe:
 - Located at Direct Plants nursery, Mickleham Road Greenvale
@@ -33,6 +35,14 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Rate limit: 20 messages per IP per minute. Best-effort (see _rateLimit.js).
+  const ip = getClientIp(req);
+  const rl = rateLimit(`chat:${ip}`, { limit: 20, windowMs: 60 * 1000 });
+  if (!rl.ok) {
+    res.setHeader('Retry-After', String(rl.retryAfter));
+    return res.status(429).json({ error: 'You\'re sending messages quite fast — please wait a moment and try again.' });
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
