@@ -76,7 +76,7 @@ Current records:
   the apex, configured in Vercel → Settings → Domains)
 - `MX/TXT send`, `TXT resend._domainkey`, `TXT _dmarc` — Resend email sending
 
-Both hosts are added in Vercel → fieldr-site → Settings → Domains. The page's
+Both hosts are added in Vercel → the replyhive project → Settings → Domains. The page's
 canonical URL and social share tags point at `https://replyhive.com.au/`.
 
 ## Local preview
