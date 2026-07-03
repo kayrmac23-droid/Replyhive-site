@@ -730,6 +730,14 @@
 
   .price-list li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
 
+  .pricing-note {
+    margin-top: 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-light);
+    max-width: 860px;
+  }
+
   /* ---- CTA SECTION ---- */
   .cta-section {
     background: var(--accent);
@@ -1093,35 +1101,37 @@
   <h2>Simple, <em>transparent</em> pricing</h2>
   <div class="pricing-grid">
     <div class="price-card">
-      <h3>Setup</h3>
-      <div class="price-amount">$900</div>
-      <div class="price-period">one-time</div>
-      <div class="price-desc">Get your AI assistant built, trained and live on your website.</div>
+      <h3>Standard</h3>
+      <div class="price-amount">$1,500</div>
+      <div class="price-period">setup + $350/mo</div>
+      <div class="price-desc">Your AI assistant built, trained, installed and managed — the full service.</div>
       <ul class="price-list">
         <li>Custom AI assistant built for your business</li>
         <li>Trained on your services, FAQs, and pricing</li>
-        <li>Installed on your website</li>
-        <li>One round of revisions</li>
-        <li>Goes live within 48 hours</li>
-      </ul>
-      <a href="#contact" class="btn-primary" style="width:100%; text-align:center; display:block;">Get started</a>
-    </div>
-    <div class="price-card featured">
-      <div class="price-badge">Most popular</div>
-      <h3>Setup + Monthly</h3>
-      <div class="price-amount">$900</div>
-      <div class="price-period">setup + $350/mo</div>
-      <div class="price-desc">Everything in setup, plus ongoing management and monthly reporting.</div>
-      <ul class="price-list">
-        <li>Everything in setup</li>
-        <li>Hosting and monitoring included</li>
+        <li>Installed on your website, live within 48 hours</li>
+        <li>Hosting, monitoring and content updates included</li>
         <li>Monthly performance report</li>
-        <li>Content updates as your business changes</li>
         <li>Priority support</li>
       </ul>
       <a href="#contact" class="btn-primary" style="width:100%; text-align:center; display:block;">Get started</a>
     </div>
+    <div class="price-card featured">
+      <div class="price-badge">First 5 businesses</div>
+      <h3>Founding Client</h3>
+      <div class="price-amount">$900</div>
+      <div class="price-period">setup + $350/mo</div>
+      <div class="price-desc">Everything in Standard at the founding rate — in exchange for being one of our launch case studies.</div>
+      <ul class="price-list">
+        <li>Everything in Standard</li>
+        <li>$600 off the standard setup</li>
+        <li>Featured as a launch case study</li>
+        <li>Direct line to the founder</li>
+        <li>Your $350/mo founding rate never increases</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="width:100%; text-align:center; display:block;">Claim a founding spot</a>
+    </div>
   </div>
+  <p class="pricing-note">Prefer annual? Twelve months for the price of ten — $3,500/yr + setup.</p>
 </section>
 
 <!-- CTA -->
