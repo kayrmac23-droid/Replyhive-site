@@ -63,7 +63,7 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    padding: 20px 48px;
+    padding: 20px max(48px, calc((100% - 1140px) / 2));
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -104,59 +104,64 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 140px 48px 80px;
+    padding: 140px max(48px, calc((100% - 1140px) / 2)) 80px;
     position: relative;
     overflow: hidden;
   }
 
-  .hero-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  /* Hero mirrors the brand card: wordmark → tagline → rule → kicker */
+  .hero-wordmark {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(64px, 10vw, 132px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--ink);
     opacity: 0;
     animation: fadeUp 0.7s 0.1s forwards;
   }
 
-  .hero-eyebrow::before {
-    content: '';
-    width: 32px;
+  .hero-wordmark span { color: var(--accent); }
+
+  .hero-tagline {
+    margin-top: 18px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(24px, 3.2vw, 40px);
+    line-height: 1.25;
+    color: var(--ink);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.25s forwards;
+  }
+
+  .hero-rule {
+    width: min(420px, 55%);
     height: 1px;
     background: var(--accent);
-  }
-
-  .hero h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(44px, 7vw, 88px);
-    font-weight: 800;
-    line-height: 1.0;
-    letter-spacing: -0.04em;
-    color: var(--ink);
-    max-width: 820px;
+    margin: 36px 0 18px;
     opacity: 0;
-    animation: fadeUp 0.7s 0.2s forwards;
+    animation: fadeIn 0.9s 0.4s forwards;
   }
 
-  .hero h1 em {
-    font-style: italic;
-    font-family: 'Lora', serif;
-    font-weight: 400;
-    color: var(--accent);
+  .hero-kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s forwards;
   }
 
   .hero-sub {
-    margin-top: 28px;
+    margin-top: 32px;
     font-size: 19px;
     color: var(--ink-light);
     max-width: 520px;
     line-height: 1.6;
     opacity: 0;
-    animation: fadeUp 0.7s 0.35s forwards;
+    animation: fadeUp 0.7s 0.6s forwards;
   }
 
   .hero-actions {
@@ -165,7 +170,7 @@
     gap: 16px;
     align-items: center;
     opacity: 0;
-    animation: fadeUp 0.7s 0.5s forwards;
+    animation: fadeUp 0.7s 0.7s forwards;
   }
 
   .btn-primary {
@@ -200,28 +205,10 @@
 
   .btn-secondary:hover { color: var(--accent); }
 
-  .hero-bg-text {
-    position: absolute;
-    right: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(120px, 18vw, 220px);
-    font-weight: 800;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(28,24,20,0.06);
-    pointer-events: none;
-    user-select: none;
-    letter-spacing: -0.05em;
-    white-space: nowrap;
-    opacity: 0;
-    animation: fadeIn 1.2s 0.6s forwards;
-  }
-
   /* ---- STATS BAR ---- */
   .stats-bar {
     background: var(--ink);
-    padding: 28px 48px;
+    padding: 28px max(48px, calc((100% - 1140px) / 2));
     display: flex;
     gap: 64px;
     align-items: center;
@@ -256,7 +243,8 @@
   }
 
   /* ---- SECTION BASE ---- */
-  section { padding: 96px 48px; }
+  /* Content is centred in a ~1140px column; backgrounds stay full-bleed. */
+  section { padding: 96px max(48px, calc((100% - 1140px) / 2)); }
 
   .section-label {
     font-family: 'DM Mono', monospace;
@@ -404,7 +392,7 @@
   /* ---- DEMO SECTION ---- */
   .demo-section {
     background: var(--ink);
-    padding: 96px 48px;
+    padding: 96px max(48px, calc((100% - 1140px) / 2));
     position: relative;
     overflow: hidden;
   }
@@ -741,7 +729,7 @@
   /* ---- CTA SECTION ---- */
   .cta-section {
     background: var(--accent);
-    padding: 96px 48px;
+    padding: 96px max(48px, calc((100% - 1140px) / 2));
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -882,7 +870,7 @@
   /* ---- FOOTER ---- */
   footer {
     background: var(--ink);
-    padding: 32px 48px;
+    padding: 32px max(48px, calc((100% - 1140px) / 2));
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -944,7 +932,7 @@
     .pain-grid, .how-steps, .demo-wrapper, .pricing-grid { grid-template-columns: 1fr; }
     .pain-intro { grid-column: 1; }
     .pain-cards { grid-column: 1; }
-    .hero-bg-text { display: none; }
+    .hero-rule { width: 70%; }
     .demo-section { padding: 64px 20px; }
     .cta-section { padding: 64px 20px; }
     .cta-email-row { flex-direction: column; }
@@ -961,16 +949,17 @@
   <a href="#contact" class="nav-cta">Get a free demo →</a>
 </nav>
 
-<!-- HERO -->
+<!-- HERO — mirrors the brand card: wordmark → tagline → rule → kicker -->
 <section class="hero">
-  <div class="hero-eyebrow">AI Assistants for Small Business</div>
-  <h1>Your business,<br><em>always answering.</em></h1>
+  <h1 class="hero-wordmark">replyhiv<span>e</span></h1>
+  <p class="hero-tagline">Your business, always answering.</p>
+  <div class="hero-rule"></div>
+  <div class="hero-kicker">AI Assistants for Small Business — Melbourne</div>
   <p class="hero-sub">Replyhive builds AI chat assistants that handle enquiries, answer questions and capture leads — 24 hours a day, without extra staff.</p>
   <div class="hero-actions">
     <a href="#demo" class="btn-primary">See a live demo</a>
     <a href="#contact" class="btn-secondary">Book a free call ↗</a>
   </div>
-  <div class="hero-bg-text">REPLYHIVE</div>
 </section>
 
 <!-- STATS BAR -->
