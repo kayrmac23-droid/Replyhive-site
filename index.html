@@ -100,48 +100,56 @@
 
   /* ---- HERO ---- */
   .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 140px max(48px, calc((100% - 1140px) / 2)) 80px;
+    padding: 150px max(48px, calc((100% - 1140px) / 2)) 90px;
     position: relative;
     overflow: hidden;
   }
 
-  /* Hero mirrors the brand card: wordmark → tagline → rule → kicker */
+  /* The hero IS the brand card: a bounded panel, not a full-page billboard. */
+  .hero-card {
+    max-width: 920px;
+    margin: 0 auto;
+    background: var(--white);
+    border: 1px solid var(--cream-dark);
+    border-radius: 18px;
+    padding: clamp(40px, 6vw, 84px);
+    box-shadow: 0 24px 60px rgba(28,24,20,0.07);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.05s forwards;
+  }
+
   .hero-wordmark {
     font-family: 'Syne', sans-serif;
-    font-size: clamp(64px, 10vw, 132px);
+    font-size: clamp(44px, 6vw, 84px);
     font-weight: 800;
     line-height: 0.95;
     letter-spacing: -0.04em;
     color: var(--ink);
     opacity: 0;
-    animation: fadeUp 0.7s 0.1s forwards;
+    animation: fadeUp 0.7s 0.15s forwards;
   }
 
   .hero-wordmark span { color: var(--accent); }
 
   .hero-tagline {
-    margin-top: 18px;
+    margin-top: 16px;
     font-family: 'Lora', serif;
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(24px, 3.2vw, 40px);
+    font-size: clamp(20px, 2.4vw, 32px);
     line-height: 1.25;
     color: var(--ink);
     opacity: 0;
-    animation: fadeUp 0.7s 0.25s forwards;
+    animation: fadeUp 0.7s 0.28s forwards;
   }
 
   .hero-rule {
-    width: min(420px, 55%);
+    width: min(360px, 60%);
     height: 1px;
     background: var(--accent);
-    margin: 36px 0 18px;
+    margin: 32px 0 16px;
     opacity: 0;
-    animation: fadeIn 0.9s 0.4s forwards;
+    animation: fadeIn 0.9s 0.42s forwards;
   }
 
   .hero-kicker {
@@ -155,20 +163,21 @@
   }
 
   .hero-sub {
-    margin-top: 32px;
-    font-size: 19px;
+    margin-top: 28px;
+    font-size: 18px;
     color: var(--ink-light);
-    max-width: 520px;
+    max-width: 480px;
     line-height: 1.6;
     opacity: 0;
     animation: fadeUp 0.7s 0.6s forwards;
   }
 
   .hero-actions {
-    margin-top: 44px;
+    margin-top: 36px;
     display: flex;
     gap: 16px;
     align-items: center;
+    flex-wrap: wrap;
     opacity: 0;
     animation: fadeUp 0.7s 0.7s forwards;
   }
@@ -927,7 +936,8 @@
   @media (max-width: 768px) {
     nav { padding: 16px 20px; }
     section { padding: 64px 20px; }
-    .hero { padding: 120px 20px 60px; }
+    .hero { padding: 110px 16px 56px; }
+    .hero-card { padding: 36px 26px; border-radius: 14px; }
     .stats-bar { padding: 20px; gap: 24px; flex-wrap: wrap; }
     .pain-grid, .how-steps, .demo-wrapper, .pricing-grid { grid-template-columns: 1fr; }
     .pain-intro { grid-column: 1; }
@@ -949,16 +959,18 @@
   <a href="#contact" class="nav-cta">Get a free demo →</a>
 </nav>
 
-<!-- HERO — mirrors the brand card: wordmark → tagline → rule → kicker -->
+<!-- HERO — the brand card as a bounded panel: wordmark → tagline → rule → kicker -->
 <section class="hero">
-  <h1 class="hero-wordmark">replyhiv<span>e</span></h1>
-  <p class="hero-tagline">Your business, always answering.</p>
-  <div class="hero-rule"></div>
-  <div class="hero-kicker">AI Assistants for Small Business — Melbourne</div>
-  <p class="hero-sub">Replyhive builds AI chat assistants that handle enquiries, answer questions and capture leads — 24 hours a day, without extra staff.</p>
-  <div class="hero-actions">
-    <a href="#demo" class="btn-primary">See a live demo</a>
-    <a href="#contact" class="btn-secondary">Book a free call ↗</a>
+  <div class="hero-card">
+    <h1 class="hero-wordmark">replyhiv<span>e</span></h1>
+    <p class="hero-tagline">Your business, always answering.</p>
+    <div class="hero-rule"></div>
+    <div class="hero-kicker">AI Assistants for Small Business — Melbourne</div>
+    <p class="hero-sub">Replyhive builds AI chat assistants that handle enquiries, answer questions and capture leads — 24 hours a day, without extra staff.</p>
+    <div class="hero-actions">
+      <a href="#demo" class="btn-primary">See a live demo</a>
+      <a href="#contact" class="btn-secondary">Book a free call ↗</a>
+    </div>
   </div>
 </section>
 
