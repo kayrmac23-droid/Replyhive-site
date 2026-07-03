@@ -63,23 +63,21 @@ well under a cent per message.
 (console.anthropic.com → Settings → Limits).** That is the only cap an attacker
 cannot route around, and it turns a worst-case incident into a bounded number.
 
-## Custom domain — replyhive.com.au
+## Custom domain — replyhive.com.au (LIVE)
 
-DNS is on Cloudflare and mail (MX → Google) already works. To fix the web 502:
+DNS is managed at the registrar: **VentraIP → VIPControl → the domain →
+DNS/Zone Management**. Mail (MX → Google Workspace) lives in the same zone —
+never delete the MX or Google TXT records.
 
-1. Vercel → the project → Settings → Domains → add `replyhive.com.au` and
-   `www.replyhive.com.au`.
-2. Cloudflare → DNS: point the apex `@` at Vercel — either `A 76.76.21.21` or
-   `CNAME @ → cname.vercel-dns.com` (Cloudflare flattens it), and
-   `CNAME www → cname.vercel-dns.com`.
-3. Set both records to **DNS only (grey cloud)** — Vercel terminates TLS
-   itself. If you want Cloudflare proxying instead, SSL/TLS mode must be
-   **Full (Strict)**, but grey-cloud is the simpler, recommended setup.
-4. Wait for the certificate to issue in Vercel (a few minutes), then check
-   `https://replyhive.com.au`.
+Current records:
 
-The page's canonical URL and social share tags already point at
-`https://replyhive.com.au/`, so they take full effect once the domain is live.
+- `A @ → 216.198.79.1` — Vercel (apex serves the site)
+- `CNAME www → <project>.vercel-dns-017.com` — Vercel (www 308-redirects to
+  the apex, configured in Vercel → Settings → Domains)
+- `MX/TXT send`, `TXT resend._domainkey`, `TXT _dmarc` — Resend email sending
+
+Both hosts are added in Vercel → fieldr-site → Settings → Domains. The page's
+canonical URL and social share tags point at `https://replyhive.com.au/`.
 
 ## Local preview
 
