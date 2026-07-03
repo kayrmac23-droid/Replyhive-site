@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Replyhive — AI Assistants for Small Business</title>
+<meta name="description" content="Replyhive builds AI chat assistants for small businesses — answering enquiries, capturing leads and taking bookings 24/7. Built in Melbourne, live on your website within 48 hours.">
+<link rel="canonical" href="https://replyhive.com.au/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Replyhive">
+<meta property="og:title" content="Replyhive — AI Assistants for Small Business">
+<meta property="og:description" content="AI chat assistants that answer enquiries, capture leads and take bookings 24/7. Built in Melbourne, live within 48 hours.">
+<meta property="og:url" content="https://replyhive.com.au/">
+<meta property="og:image" content="https://replyhive.com.au/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Replyhive — AI Assistants for Small Business">
+<meta name="twitter:description" content="AI chat assistants that answer enquiries, capture leads and take bookings 24/7. Built in Melbourne, live within 48 hours.">
+<meta name="twitter:image" content="https://replyhive.com.au/og.jpg">
+<meta name="theme-color" content="#F4EFE6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%9D%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -846,6 +861,16 @@
   .cta-status.success { color: #fff; font-weight: 500; }
   .cta-status.error { color: #2a1206; font-weight: 500; }
 
+  /* Honeypot field — visually removed for humans, present for bots. */
+  .hp-wrap {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
   /* ---- FOOTER ---- */
   footer {
     background: var(--ink);
@@ -1049,11 +1074,11 @@
             <div class="chatbot-status">Online now</div>
           </div>
         </div>
-        <div class="chatbot-messages" id="messages">
+        <div class="chatbot-messages" id="messages" role="log" aria-live="polite" aria-label="Chat conversation">
           <div class="msg msg-bot">Hey there! 👋 Welcome to Forget Me Not Eatery. I'm here to help with any questions about our menu, opening hours, bookings, or anything else. What can I help you with?</div>
         </div>
         <div class="chatbot-input-row">
-          <input class="chatbot-input" id="chatInput" type="text" placeholder="Ask me anything…" />
+          <input class="chatbot-input" id="chatInput" type="text" placeholder="Ask me anything…" maxlength="500" aria-label="Type your message to the demo assistant" />
           <button class="chatbot-send" id="sendBtn" onclick="sendMessage()">Send</button>
         </div>
       </div>
@@ -1105,10 +1130,14 @@
   <p>Tell us a bit about your business and we'll reach out to set up a free demo tailored to you. No commitment, no tech knowledge needed.</p>
   <form class="cta-form" id="leadForm" novalidate>
     <div class="cta-fields">
-      <input class="cta-input" type="text" id="leadName" name="name" placeholder="Your name" autocomplete="name" required />
-      <input class="cta-input" type="text" id="leadBusiness" name="business" placeholder="Business name" autocomplete="organization" required />
-      <input class="cta-input" type="email" id="leadEmail" name="email" placeholder="your@email.com" autocomplete="email" required />
-      <input class="cta-input" type="tel" id="leadPhone" name="phone" placeholder="Phone number" autocomplete="tel" required />
+      <input class="cta-input" type="text" id="leadName" name="name" placeholder="Your name" autocomplete="name" maxlength="100" aria-label="Your name" required />
+      <input class="cta-input" type="text" id="leadBusiness" name="business" placeholder="Business name" autocomplete="organization" maxlength="100" aria-label="Business name" required />
+      <input class="cta-input" type="email" id="leadEmail" name="email" placeholder="your@email.com" autocomplete="email" maxlength="200" aria-label="Email address" required />
+      <input class="cta-input" type="tel" id="leadPhone" name="phone" placeholder="Phone number" autocomplete="tel" maxlength="40" aria-label="Phone number" required />
+    </div>
+    <!-- Honeypot: hidden from humans, auto-filled by spam bots. Leave empty. -->
+    <div class="hp-wrap" aria-hidden="true">
+      <input class="cta-input" type="text" id="leadWebsite" name="website" placeholder="Website" tabindex="-1" autocomplete="off" />
     </div>
     <button class="cta-submit" type="submit" id="leadSubmit">Get my free demo</button>
     <p class="cta-status" id="leadStatus" role="status" aria-live="polite"></p>
@@ -1246,6 +1275,7 @@ leadForm.addEventListener('submit', async (e) => {
     business: leadFields.business.value.trim(),
     email: leadFields.email.value.trim(),
     phone: leadFields.phone.value.trim(),
+    website: document.getElementById('leadWebsite').value, // honeypot — humans leave this empty
   };
 
   Object.values(leadFields).forEach((el) => el.classList.remove('invalid'));
